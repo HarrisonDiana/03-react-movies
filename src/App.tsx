@@ -11,6 +11,8 @@ import ErrorMessage from './components/ErrorMessage/ErrorMessage';
 import { fetchMovies } from './services/movieService';
 import type { Movie } from './types/movie';
 
+import styles from './App.module.css';
+
 export default function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
@@ -33,6 +35,7 @@ export default function App() {
       setMovies(results);
     } catch {
       setIsError(true);
+      toast.error('There was an error, please try again...');
     } finally {
       setIsLoading(false);
     }
@@ -48,23 +51,30 @@ export default function App() {
 
   return (
     <>
-      <SearchBar onSubmit={handleSearch} />
+      <header className={styles.header}>
+        <a
+          className={styles.logo}
+          href="https://www.themoviedb.org/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Powered by TMDB
+        </a>
+
+        <div className={styles.search}>
+          <SearchBar onSubmit={handleSearch} />
+        </div>
+      </header>
 
       {isLoading && <Loader />}
       {isError && <ErrorMessage />}
 
       {!isLoading && !isError && movies.length > 0 && (
-        <MovieGrid
-          movies={movies}
-          onSelect={handleSelectMovie}
-        />
+        <MovieGrid movies={movies} onSelect={handleSelectMovie} />
       )}
 
       {selectedMovie && (
-        <MovieModal
-          movie={selectedMovie}
-          onClose={handleCloseModal}
-        />
+        <MovieModal movie={selectedMovie} onClose={handleCloseModal} />
       )}
 
       <Toaster position="top-right" />

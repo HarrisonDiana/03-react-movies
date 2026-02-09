@@ -1,0 +1,24 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 16px 24px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.logo {
+  font-size: 14px;
+  font-weight: 500;
+  color: #01b4e4;
+  text-decoration: none;
+}
+
+.logo:hover {
+  text-decoration: underline;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+}
